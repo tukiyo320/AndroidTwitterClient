@@ -7,6 +7,7 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_timeline"
+        android:navigationIcon="@drawable/tw__composer_logo_white"
         style="@style/AppTheme.Toolbar"/>
 
     <android.support.v4.widget.SwipeRefreshLayout

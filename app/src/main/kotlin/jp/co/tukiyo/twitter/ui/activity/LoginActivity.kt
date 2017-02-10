@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        prefs = getPreferences(Context.MODE_PRIVATE)
+        prefs = getSharedPreferences("jp.co.tukiyo.twitter.settings", Context.MODE_PRIVATE)
 
         loginButton = findViewById(R.id.twitter_login_button) as TwitterLoginButton
         loginButton.isEnabled = true
@@ -68,6 +68,8 @@ class LoginActivity : AppCompatActivity() {
                 val editor = prefs.edit()
                 editor.putLong("id", user.id)
                 editor.putString("name", user.name)
+                editor.putString("token", authToken.token)
+                editor.putString("secret", authToken.secret)
                 editor.apply()
                 setResult(Activity.RESULT_OK)
                 finish()
