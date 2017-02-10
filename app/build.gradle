@@ -58,6 +58,7 @@ dependencies {
     compile "com.trello.rxlifecycle2:rxlifecycle-kotlin:2.0.1"
     compile "com.stepango.rxdatabindings:rxdatabindings:0.5.0"
     compile "com.github.chuross:recyclerviewadapters:1.0.2"
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }
 repositories {
     mavenCentral()
