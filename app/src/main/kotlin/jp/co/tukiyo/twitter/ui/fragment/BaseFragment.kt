@@ -22,4 +22,9 @@ abstract class BaseFragment : Fragment() {
         disposables = CompositeDisposable()
         return inflater?.inflate(layoutResourceId, container)
     }
+
+    override fun onDestroyView() {
+        disposables?.dispose()
+        super.onDestroyView()
+    }
 }

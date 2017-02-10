@@ -9,10 +9,18 @@
         android:id="@+id/toolbar_timeline"
         style="@style/AppTheme.Toolbar"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/tweet_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_tweet_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar_timeline"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_timeline">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/tweet_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar_timeline"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
