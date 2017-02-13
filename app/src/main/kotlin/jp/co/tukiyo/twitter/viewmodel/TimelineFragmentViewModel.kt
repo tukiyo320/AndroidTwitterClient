@@ -9,18 +9,23 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.models.Tweet
 import io.reactivex.subjects.BehaviorSubject
 
-class TimelineFragmentViewModel(context: Context) : FragmentViewModel(context){
-    val tweets: BehaviorSubject<List<Tweet>> = BehaviorSubject.create()
+class TimelineFragmentViewModel(context: Context) : FragmentViewModel(context) {
+    val tweets: BehaviorSubject<Tweet> = BehaviorSubject.create()
+    var latestTweetId: Long? = null
 
     fun fetchTimeline() {
-        Twitter.getApiClient().statusesService.homeTimeline(10, null, null, false, false, false, false)
+        val sinceId = latestTweetId?.let { it + 1 }
+        Twitter.getApiClient().statusesService.homeTimeline(null, sinceId, null, false, false, false, false)
                 .enqueue(object : Callback<List<Tweet>>() {
                     override fun failure(exception: TwitterException?) {
                         Toast.makeText(context, "failed get tweet", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun success(result: Result<List<Tweet>>?) {
-                        result?.data.run { tweets.onNext(this) }
+                        result?.data.run {
+                            this?.reversed()?.forEach { tweets.onNext(it) }
+                            latestTweetId = this?.first()?.id
+                        }
                     }
                 })
     }

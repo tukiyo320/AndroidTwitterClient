@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
+import io.reactivex.Observable
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.ui.adapter.TweetListAdapter
@@ -39,17 +40,18 @@ class TimelineFragment : BaseFragment(), OnRecyclerViewListener {
         (view?.findViewById(R.id.swipe_tweet_list) as SwipeRefreshLayout).run {
             setOnRefreshListener {
                 viewModel.fetchTimeline()
-                if(isRefreshing) {
+                if (isRefreshing) {
                     isRefreshing = false
                 }
             }
         }
 
         viewModel.tweets.sync().subscribe {
-            recyclerView.adapter
-            tweetListAdapter.clear()
-            tweetListAdapter.addAll(it)
-        }.run { disposables?.add(this) }
+            tweetListAdapter.add(0, it)
+        }.run {
+            tweetListAdapter.notifyDataSetChanged()
+            disposables?.add(this)
+        }
 
         viewModel.fetchTimeline()
     }
