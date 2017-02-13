@@ -1,6 +1,7 @@
 package jp.co.tukiyo.twitter.ui.fragment
 
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,6 +14,7 @@ import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.ui.adapter.TweetListAdapter
 import jp.co.tukiyo.twitter.ui.listener.OnRecyclerViewListener
+import jp.co.tukiyo.twitter.ui.screen.PostTweetScreen
 import jp.co.tukiyo.twitter.viewmodel.TimelineFragmentViewModel
 
 @FragmentWithArgs
@@ -43,6 +45,12 @@ class TimelineFragment : BaseFragment(), OnRecyclerViewListener {
                 if (isRefreshing) {
                     isRefreshing = false
                 }
+            }
+        }
+
+        (view?.findViewById(R.id.tweet_button) as FloatingActionButton).run {
+            setOnClickListener {
+                mainActivity.pushScreen(PostTweetScreen())
             }
         }
 
