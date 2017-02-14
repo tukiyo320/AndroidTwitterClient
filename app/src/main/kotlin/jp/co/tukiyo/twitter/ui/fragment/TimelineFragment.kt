@@ -60,7 +60,6 @@ class TimelineFragment : BaseFragment(), OnRecyclerViewListener {
                 .onNext { tweetListAdapter.add(0, it) }
                 .subscribe()
                 .run {
-                    tweetListAdapter.notifyDataSetChanged()
                     disposables?.add(this)
                 }
 

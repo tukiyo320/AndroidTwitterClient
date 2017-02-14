@@ -18,13 +18,11 @@ class PostTweetFragmentViewModel(context: Context) : FragmentViewModel(context) 
                     .enqueue(object : Callback<Tweet>() {
                         override fun success(result: Result<Tweet>?) {
                             Toast.makeText(context, "tweeted!!", Toast.LENGTH_SHORT).show()
-                            result?.run { subject.onNext(data) }
                             subject.onComplete()
                         }
 
                         override fun failure(exception: TwitterException?) {
                             Toast.makeText(context, "tweet failed", Toast.LENGTH_SHORT).show()
-                            exception?.run { subject.onError(this) }
                             subject.onComplete()
                         }
                     })

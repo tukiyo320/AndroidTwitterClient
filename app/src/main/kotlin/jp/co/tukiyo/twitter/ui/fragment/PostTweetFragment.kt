@@ -10,7 +10,6 @@ import android.widget.EditText
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.extensions.onCompleted
-import jp.co.tukiyo.twitter.extensions.onNext
 import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.viewmodel.PostTweetFragmentViewModel
 
