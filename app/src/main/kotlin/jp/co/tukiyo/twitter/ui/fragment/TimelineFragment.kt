@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
+import com.twitter.sdk.android.core.models.Tweet
 import io.reactivex.Observable
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.extensions.onNext

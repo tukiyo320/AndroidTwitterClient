@@ -24,9 +24,9 @@ class TimelineFragmentViewModel(context: Context) : FragmentViewModel(context) {
 
                     override fun success(result: Result<List<Tweet>>?) {
                         result?.data?.run {
-                            this.reversed().forEach { tweets.onNext(it) }
-                            if (!this.isEmpty()) {
-                                latestTweetId = this.first().id
+                            reversed().forEach { tweets.onNext(it) }
+                            if (!isEmpty()) {
+                                latestTweetId = first().id
                             }
                         }
                         tweets.onComplete()
