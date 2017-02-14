@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import io.reactivex.Observable
 import jp.co.tukiyo.twitter.R
+import jp.co.tukiyo.twitter.extensions.onNext
 import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.ui.adapter.TweetListAdapter
 import jp.co.tukiyo.twitter.ui.listener.OnRecyclerViewListener
@@ -54,12 +55,13 @@ class TimelineFragment : BaseFragment(), OnRecyclerViewListener {
             }
         }
 
-        viewModel.tweets.sync().subscribe {
-            tweetListAdapter.add(0, it)
-        }.run {
-            tweetListAdapter.notifyDataSetChanged()
-            disposables?.add(this)
-        }
+        viewModel.tweets.sync()
+                .onNext { tweetListAdapter.add(0, it) }
+                .subscribe()
+                .run {
+                    tweetListAdapter.notifyDataSetChanged()
+                    disposables?.add(this)
+                }
 
         viewModel.fetchTimeline()
     }

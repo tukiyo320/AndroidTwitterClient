@@ -19,13 +19,17 @@ class TimelineFragmentViewModel(context: Context) : FragmentViewModel(context) {
                 .enqueue(object : Callback<List<Tweet>>() {
                     override fun failure(exception: TwitterException?) {
                         Toast.makeText(context, "failed get tweet", Toast.LENGTH_SHORT).show()
+                        tweets.onComplete()
                     }
 
                     override fun success(result: Result<List<Tweet>>?) {
-                        result?.data.run {
-                            this?.reversed()?.forEach { tweets.onNext(it) }
-                            latestTweetId = this?.first()?.id
+                        result?.data?.run {
+                            this.reversed().forEach { tweets.onNext(it) }
+                            if (!this.isEmpty()) {
+                                latestTweetId = this.first().id
+                            }
                         }
+                        tweets.onComplete()
                     }
                 })
     }
