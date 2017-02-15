@@ -1,6 +1,7 @@
 package jp.co.tukiyo.twitter.viewmodel
 
 import android.content.Context
+import android.os.Bundle
 import android.widget.Toast
 import com.twitter.sdk.android.Twitter
 import com.twitter.sdk.android.core.Callback
@@ -9,9 +10,20 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.models.Tweet
 import io.reactivex.subjects.BehaviorSubject
 
-class TimelineFragmentViewModel(context: Context) : FragmentViewModel(context) {
+class TimelineFragmentViewModel(context: Context, savedInstanceState: Bundle?) : FragmentViewModel(context) {
     val tweets: BehaviorSubject<Tweet> = BehaviorSubject.create()
-    var latestTweetId: Long? = null
+    var latestTweetId: Long?
+
+    init {
+        val id = savedInstanceState?.getLong("latest_tweet_id")
+        latestTweetId = id?.let {
+            return@let if (it == 0L) {
+                null
+            } else {
+                it
+            }
+        }
+    }
 
     fun fetchTimeline() {
         val sinceId = latestTweetId?.let { it + 1 }
@@ -30,5 +42,11 @@ class TimelineFragmentViewModel(context: Context) : FragmentViewModel(context) {
                         }
                     }
                 })
+    }
+
+    fun destroy(outState: Bundle?) {
+        latestTweetId?.let {
+            outState?.putLong("latest_tweet_id", it)
+        }
     }
 }

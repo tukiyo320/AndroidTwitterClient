@@ -23,6 +23,13 @@ import jp.co.tukiyo.twitter.viewmodel.TimelineFragmentViewModel
 class TimelineFragment : BaseFragment(), OnRecyclerViewListener {
     override val layoutResourceId: Int = R.layout.fragment_timeline
     lateinit var viewModel: TimelineFragmentViewModel
+    lateinit var tweetListAdapter : TweetListAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = TimelineFragmentViewModel(context, savedInstanceState)
+        tweetListAdapter = TweetListAdapter(context)
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -31,10 +38,6 @@ class TimelineFragment : BaseFragment(), OnRecyclerViewListener {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = TimelineFragmentViewModel(context)
-
-        val tweetListAdapter = TweetListAdapter(context)
 
         val recyclerView = (view?.findViewById(R.id.tweet_list) as RecyclerView).apply {
             layoutManager = LinearLayoutManager(activity)
@@ -68,5 +71,10 @@ class TimelineFragment : BaseFragment(), OnRecyclerViewListener {
 
     override fun onRecyclerViewListener(v: View, position: Int) {
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        viewModel.destroy(outState)
+        super.onSaveInstanceState(outState)
     }
 }
