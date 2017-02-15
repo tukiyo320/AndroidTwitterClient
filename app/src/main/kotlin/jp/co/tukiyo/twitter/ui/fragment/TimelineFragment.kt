@@ -48,12 +48,6 @@ class TimelineFragment : BaseFragment(), OnRecyclerViewListener {
             }
         }
 
-        (view?.findViewById(R.id.tweet_button) as FloatingActionButton).run {
-            setOnClickListener {
-                mainActivity.pushScreen(PostTweetScreen())
-            }
-        }
-
         viewModel.tweets.sync()
                 .onNext { tweetListAdapter.add(0, it) }
                 .subscribe()
