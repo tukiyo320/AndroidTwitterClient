@@ -20,7 +20,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         disposables = CompositeDisposable()
-        return inflater?.inflate(layoutResourceId, container)
+        return inflater?.inflate(layoutResourceId, container, false)
     }
 
     override fun onDestroyView() {

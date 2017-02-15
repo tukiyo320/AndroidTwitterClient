@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.ui.screen.Screen
+import jp.co.tukiyo.twitter.ui.screen.TabScreen
 import jp.co.tukiyo.twitter.ui.screen.TimelineScreen
 
 class MainActivity : AppCompatActivity() {
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode) {
             1001 -> {
-                replaceScreen(TimelineScreen())
+                replaceScreen(TabScreen())
             }
         }
     }

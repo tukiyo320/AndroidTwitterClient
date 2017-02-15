@@ -31,11 +31,6 @@ class TimelineFragment : BaseFragment(), OnRecyclerViewListener {
         tweetListAdapter = TweetListAdapter(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater?.inflate(R.layout.fragment_timeline, container, false)
-    }
-
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
