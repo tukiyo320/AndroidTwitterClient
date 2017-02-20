@@ -6,11 +6,14 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import jp.co.tukiyo.twitter.R
+import jp.co.tukiyo.twitter.databinding.ActivityMainBinding
 import jp.co.tukiyo.twitter.ui.screen.Screen
 import jp.co.tukiyo.twitter.ui.screen.TabScreen
 import jp.co.tukiyo.twitter.ui.screen.TimelineScreen
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+    override val layoutResourceId: Int = R.layout.activity_main
 
     fun pushScreen(screen: Screen) {
         if (supportFragmentManager.findFragmentByTag(screen.identify) != null) return
@@ -34,7 +37,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         val intent: Intent = Intent(this, LoginActivity::class.java)
         startActivityForResult(intent, 1001)

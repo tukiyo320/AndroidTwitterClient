@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/tweet_item"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:divider="@color/tw__composer_blue_text"
-              android:dividerPadding="5dp"
-              android:showDividers="beginning"
-              android:background="#CCCCFF"
-              android:orientation="horizontal">
+<layout>
 
-    <ImageView
-        android:id="@+id/tweet_item_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/tweet_item"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="#CCCCFF"
+                  android:divider="@color/tw__composer_blue_text"
+                  android:dividerPadding="5dp"
+                  android:orientation="horizontal"
+                  android:showDividers="beginning">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1">
+        <ImageView
+            android:id="@+id/tweet_item_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
 
-        <TextView
-            android:id="@+id/tweet_item_display_name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-        <TextView
-            android:id="@+id/tweet_item_text"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="2dp"/>
+            <TextView
+                android:id="@+id/tweet_item_display_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
+            <TextView
+                android:id="@+id/tweet_item_text"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>

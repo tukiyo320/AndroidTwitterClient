@@ -12,6 +12,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.twitter.sdk.android.core.models.Tweet
 import io.reactivex.Observable
 import jp.co.tukiyo.twitter.R
+import jp.co.tukiyo.twitter.databinding.FragmentTimelineBinding
 import jp.co.tukiyo.twitter.extensions.onNext
 import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.ui.adapter.TweetListAdapter
@@ -20,7 +21,7 @@ import jp.co.tukiyo.twitter.ui.screen.PostTweetScreen
 import jp.co.tukiyo.twitter.viewmodel.TimelineFragmentViewModel
 
 @FragmentWithArgs
-class TimelineFragment : BaseFragment(), OnRecyclerViewListener {
+class TimelineFragment : BaseFragment<FragmentTimelineBinding>(), OnRecyclerViewListener {
     override val layoutResourceId: Int = R.layout.fragment_timeline
     lateinit var viewModel: TimelineFragmentViewModel
     lateinit var tweetListAdapter : TweetListAdapter
@@ -34,16 +35,17 @@ class TimelineFragment : BaseFragment(), OnRecyclerViewListener {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = (view?.findViewById(R.id.tweet_list) as RecyclerView).apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = tweetListAdapter
-        }
-
-        (view?.findViewById(R.id.swipe_tweet_list) as SwipeRefreshLayout).run {
-            setOnRefreshListener {
-                viewModel.fetchTimeline()
-                if (isRefreshing) {
-                    isRefreshing = false
+        binding?.run {
+            tweetList.run {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = tweetListAdapter
+            }
+            swipeTweetList.run {
+                setOnRefreshListener {
+                    viewModel.fetchTimeline()
+                    if (isRefreshing) {
+                        isRefreshing = false
+                    }
                 }
             }
         }

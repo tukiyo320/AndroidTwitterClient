@@ -49,6 +49,7 @@ dependencies {
         transitive = true;
     }
     compile "com.hannesdorfmann.fragmentargs:annotation:3.0.2"
+    kapt "com.android.databinding:compiler:2.2.0"
     kapt "com.hannesdorfmann.fragmentargs:processor:3.0.2"
     compile "com.android.support:recyclerview-v7:25.1.1"
     compile "io.reactivex.rxjava2:rxjava:2.0.1"

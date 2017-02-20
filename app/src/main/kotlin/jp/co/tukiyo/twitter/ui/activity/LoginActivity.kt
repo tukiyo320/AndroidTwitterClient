@@ -13,29 +13,31 @@ import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import com.twitter.sdk.android.core.models.User
 import jp.co.tukiyo.twitter.R
+import jp.co.tukiyo.twitter.databinding.ActivityLoginBinding
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
-    lateinit private var loginButton: TwitterLoginButton
+    override val layoutResourceId: Int = R.layout.activity_login
     lateinit private var prefs : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
         prefs = getSharedPreferences("jp.co.tukiyo.twitter.settings", Context.MODE_PRIVATE)
 
-        loginButton = findViewById(R.id.twitter_login_button) as TwitterLoginButton
-        loginButton.isEnabled = true
-        loginButton.callback = object : Callback<TwitterSession>() {
-            override fun success(result: Result<TwitterSession>) {
-                val session = result.data
-                setUserData(session.authToken, session.userName, session.userId)
-            }
+        binding.twitterLoginButton.run {
+            isEnabled = true
+            callback = object : Callback<TwitterSession>() {
+                override fun success(result: Result<TwitterSession>) {
+                    result.data.run {
+                        setUserData(authToken, userName, userId)
+                    }
+                }
 
-            override fun failure(exception: TwitterException) {
-                toast("twitter login failed")
-                Log.d("TwitterKit", "Login with Twitter failure", exception)
+                override fun failure(exception: TwitterException) {
+                    toast("twitter login failed")
+                    Log.d("TwitterKit", "Login with Twitter failure", exception)
+                }
             }
         }
 
@@ -60,17 +62,17 @@ class LoginActivity : AppCompatActivity() {
 
         userCall.enqueue(object : Callback<User>() {
             override fun failure(exception: TwitterException?) {
-                loginButton.callOnClick()
+                binding.twitterLoginButton.callOnClick()
             }
 
             override fun success(result: Result<User>?) {
                 val user = result?.data!!
-                val editor = prefs.edit()
-                editor.putLong("id", user.id)
-                editor.putString("name", user.name)
-                editor.putString("token", authToken.token)
-                editor.putString("secret", authToken.secret)
-                editor.apply()
+                prefs.edit().apply {
+                    putLong("id", user.id)
+                    putString("name", user.name)
+                    putString("token", authToken.token)
+                    putString("secret", authToken.secret)
+                }.apply()
                 setResult(Activity.RESULT_OK)
                 finish()
             }
@@ -85,6 +87,6 @@ class LoginActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         // Make sure that the loginButton hears the result from any
         // Activity that it triggered.
-        loginButton.onActivityResult(requestCode, resultCode, data)
+        binding.twitterLoginButton.onActivityResult(requestCode, resultCode, data)
     }
 }

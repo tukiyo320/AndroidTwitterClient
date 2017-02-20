@@ -1,11 +1,11 @@
 package jp.co.tukiyo.twitter.ui.screen
 
-import jp.co.tukiyo.twitter.ui.fragment.BaseFragment
+import android.support.v4.app.Fragment
 
 
 interface Screen {
     val identify: String
-    val fragment: BaseFragment
+    val fragment: Fragment
         get() = fragmentFactory.invoke()
-    val fragmentFactory: () -> BaseFragment
+    val fragmentFactory: () -> Fragment
 }

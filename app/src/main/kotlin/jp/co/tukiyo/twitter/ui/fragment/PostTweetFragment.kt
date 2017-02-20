@@ -9,31 +9,30 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import jp.co.tukiyo.twitter.R
+import jp.co.tukiyo.twitter.databinding.FragmentPostTweetBinding
 import jp.co.tukiyo.twitter.extensions.onCompleted
 import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.viewmodel.PostTweetFragmentViewModel
 
 @FragmentWithArgs
-class PostTweetFragment : BaseFragment() {
+class PostTweetFragment : BaseFragment<FragmentPostTweetBinding>() {
     override val layoutResourceId: Int = R.layout.fragment_post_tweet
-    var tweetText : EditText? = null
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val viewModel = PostTweetFragmentViewModel(context)
 
-        val toolbar = (view?.findViewById(R.id.toolbar) as Toolbar?)?.apply {
-            setNavigationOnClickListener {
-                mainActivity.popScreen()
+        binding?.run {
+            toolbar.run {
+                setNavigationOnClickListener {
+                    mainActivity.popScreen()
+                }
             }
-        }
-
-        tweetText = view?.findViewById(R.id.tweet_new_text) as EditText?
-
-        val fab = (view?.findViewById(R.id.tweet_post_button) as FloatingActionButton).apply {
-            setOnClickListener {
-                viewModel.postTweet(tweetText?.text?.toString())
+            tweetPostButton.run {
+                setOnClickListener {
+                    viewModel.postTweet(tweetNewText?.text?.toString())
+                }
             }
         }
 
@@ -47,6 +46,6 @@ class PostTweetFragment : BaseFragment() {
     }
 
     fun reset() {
-        tweetText?.text?.clear()
+        binding?.tweetNewText?.text?.clear()
     }
 }
