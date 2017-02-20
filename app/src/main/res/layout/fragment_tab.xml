@@ -71,7 +71,8 @@
                     android:layout_above="@+id/top_left_navigation_header_username"
                     android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
-                    android:contentDescription="usericon"/>
+                    android:contentDescription="usericon"
+                    app:imageUrl="@{user.profileImageUrl}"/>
 
                 <TextView
                     android:id="@+id/top_left_navigation_header_username"

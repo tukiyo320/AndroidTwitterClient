@@ -5,8 +5,10 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 
 @BindingAdapter("imageUrl")
-fun ImageView.loadImage(imageUrl: String) {
+fun ImageView.loadImage(imageUrl: String?) {
     Glide.with(context)
             .load(imageUrl)
+            .placeholder(android.R.drawable.stat_sys_download)
+            .dontAnimate()
             .into(this)
 }

@@ -50,11 +50,6 @@ class TabFragment : BaseFragment<FragmentTabBinding>() {
                                 .placeholder(android.R.drawable.ic_menu_call)
                                 .dontAnimate()
                                 .into(BitmapViewBackgroundTarget(topLeftNavigationHeader))
-                        Glide.with(context)
-                                .load(it.profileImageUrl)
-                                .placeholder(android.R.drawable.ic_menu_call)
-                                .dontAnimate()
-                                .into(topLeftNavigationHeaderIcon)
                     }
                 }
                 .subscribe()
