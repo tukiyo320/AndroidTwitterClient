@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="tweet"
+            type="com.twitter.sdk.android.core.models.Tweet"/>
+    </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:id="@+id/tweet_item"
@@ -14,7 +21,8 @@
         <ImageView
             android:id="@+id/tweet_item_icon"
             android:layout_width="50dp"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp"
+            app:imageUrl="@{tweet.user.profileImageUrl}"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,14 +33,16 @@
             <TextView
                 android:id="@+id/tweet_item_display_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@{tweet.user.name}"/>
 
             <TextView
                 android:id="@+id/tweet_item_text"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginBottom="2dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="@{tweet.text}"/>
 
         </LinearLayout>
     </LinearLayout>

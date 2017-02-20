@@ -23,8 +23,7 @@
             android:layout_marginRight="16dp"
             android:clickable="true"
             app:fabSize="normal"
-            app:srcCompat="@android:drawable/ic_menu_save"
-            android:onClick="@{}"/>
+            app:srcCompat="@android:drawable/ic_menu_save"/>
 
         <EditText
             android:id="@+id/tweet_new_text"
