@@ -1,23 +1,15 @@
 package jp.co.tukiyo.twitter.ui.fragment
 
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
-import com.twitter.sdk.android.core.models.Tweet
-import io.reactivex.Observable
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.databinding.FragmentTimelineBinding
 import jp.co.tukiyo.twitter.extensions.onNext
 import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.ui.adapter.TweetListAdapter
 import jp.co.tukiyo.twitter.ui.listener.OnRecyclerViewListener
-import jp.co.tukiyo.twitter.ui.screen.PostTweetScreen
 import jp.co.tukiyo.twitter.viewmodel.TimelineFragmentViewModel
 
 @FragmentWithArgs

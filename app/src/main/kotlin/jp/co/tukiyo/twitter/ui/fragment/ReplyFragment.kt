@@ -1,9 +1,7 @@
 package jp.co.tukiyo.twitter.ui.fragment
 
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.databinding.FragmentReplayBinding

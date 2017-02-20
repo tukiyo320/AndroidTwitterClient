@@ -1,12 +1,7 @@
 package jp.co.tukiyo.twitter.ui.fragment
 
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v7.widget.Toolbar
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.databinding.FragmentPostTweetBinding

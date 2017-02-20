@@ -42,7 +42,7 @@ class TabFragment : BaseFragment<FragmentTabBinding>() {
         viewModel.user.sync()
                 .onNext {
                     binding?.run {
-                        topLeftNavigationHeaderUsername.text = it.name
+                        user = it
                         Glide.with(context)
                                 .load(it.profileBackgroundImageUrl)
                                 .asBitmap()
