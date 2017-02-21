@@ -9,13 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.trello.rxlifecycle2.android.FragmentEvent
+import com.trello.rxlifecycle2.components.support.RxFragment
 import io.reactivex.disposables.CompositeDisposable
 import jp.co.tukiyo.twitter.application.Application
 import jp.co.tukiyo.twitter.ui.activity.MainActivity
 import jp.co.tukiyo.twitter.viewmodel.FragmentViewModel
 import jp.co.tukiyo.twitter.viewmodel.ViewModel
 
-abstract class BaseFragment<BINDING: ViewDataBinding> : Fragment() {
+abstract class BaseFragment<BINDING: ViewDataBinding> : RxFragment() {
 
     abstract val layoutResourceId: Int
     var disposables: CompositeDisposable? = null

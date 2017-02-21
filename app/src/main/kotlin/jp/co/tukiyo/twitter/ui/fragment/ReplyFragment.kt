@@ -3,9 +3,9 @@ package jp.co.tukiyo.twitter.ui.fragment
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.databinding.FragmentReplayBinding
-import jp.co.tukiyo.twitter.extensions.onNext
 import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.ui.adapter.TweetListAdapter
 import jp.co.tukiyo.twitter.viewmodel.ReplyFragmentViewModel
@@ -40,7 +40,8 @@ class ReplyFragment :BaseFragment<FragmentReplayBinding>() {
         }
 
         viewModel.replies.sync()
-                .onNext { tweetListAdapter.add(0, it) }
+                .bindToLifecycle(this)
+                .doOnNext { tweetListAdapter.add(0, it) }
                 .subscribe()
                 .run { disposables?.add(this) }
 

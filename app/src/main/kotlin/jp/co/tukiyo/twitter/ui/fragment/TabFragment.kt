@@ -6,10 +6,10 @@ import android.view.View
 import android.widget.ArrayAdapter
 import com.bumptech.glide.Glide
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.databinding.FragmentTabBinding
 import jp.co.tukiyo.twitter.extensions.glide.BitmapViewBackgroundTarget
-import jp.co.tukiyo.twitter.extensions.onNext
 import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.ui.adapter.TabAdapter
 import jp.co.tukiyo.twitter.ui.screen.PostTweetScreen
@@ -48,7 +48,8 @@ class TabFragment : BaseFragment<FragmentTabBinding>() {
         }
 
         viewModel.user.sync()
-                .onNext {
+                .bindToLifecycle(this)
+                .doOnNext {
                     binding?.run {
                         user = it
                         Glide.with(context)
