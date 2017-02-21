@@ -13,6 +13,7 @@ import jp.co.tukiyo.twitter.extensions.onNext
 import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.ui.adapter.TabAdapter
 import jp.co.tukiyo.twitter.ui.screen.PostTweetScreen
+import jp.co.tukiyo.twitter.ui.screen.WebViewScreen
 import jp.co.tukiyo.twitter.viewmodel.TabFragmentViewModel
 
 @FragmentWithArgs
@@ -31,7 +32,14 @@ class TabFragment : BaseFragment<FragmentTabBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.run {
-            topLeftNavigationList?.adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, listOf("profile", "config"))
+            topLeftNavigationList?.run {
+                adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, listOf("profile", "config", "official"))
+                setOnItemClickListener { adapterView, view, i, l ->
+                    when(i) {
+                        2 -> mainActivity.pushScreen(WebViewScreen())
+                    }
+                }
+            }
             pager?.adapter = adapter
             tab?.setViewPager(binding?.pager)
             tweetButton?.setOnClickListener {
