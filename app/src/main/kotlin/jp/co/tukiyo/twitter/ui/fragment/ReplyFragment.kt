@@ -17,7 +17,7 @@ class ReplyFragment :BaseFragment<FragmentReplayBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ReplyFragmentViewModel(context)
+        viewModel = ReplyFragmentViewModel(context, savedInstanceState)
         tweetListAdapter = TweetListAdapter(context)
     }
 
@@ -45,5 +45,10 @@ class ReplyFragment :BaseFragment<FragmentReplayBinding>() {
                 .run { disposables?.add(this) }
 
         viewModel.fetchReply()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        viewModel.destroy(outState)
+        super.onSaveInstanceState(outState)
     }
 }
