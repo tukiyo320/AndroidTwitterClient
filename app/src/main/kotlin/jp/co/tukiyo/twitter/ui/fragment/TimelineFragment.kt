@@ -23,6 +23,13 @@ class TimelineFragment : BaseFragment<FragmentTimelineBinding>(), OnRecyclerView
         super.onCreate(savedInstanceState)
         viewModel = TimelineFragmentViewModel(context).apply {
             restoreInstanceState(savedInstanceState)
+            tweets.sync()
+                    .bindToLifecycle(this)
+                    .onNext { tweetListAdapter.add(0, it) }
+                    .subscribe()
+                    .run {
+                        disposables.add(this)
+                    }
         }
         tweetListAdapter = TweetListAdapter(context)
     }
@@ -44,14 +51,6 @@ class TimelineFragment : BaseFragment<FragmentTimelineBinding>(), OnRecyclerView
                 }
             }
         }
-
-        viewModel.tweets.sync()
-                .bindToLifecycle(this)
-                .onNext { tweetListAdapter.add(0, it) }
-                .subscribe()
-                .run {
-                    disposables?.add(this)
-                }
 
         viewModel.fetchTimeline()
     }

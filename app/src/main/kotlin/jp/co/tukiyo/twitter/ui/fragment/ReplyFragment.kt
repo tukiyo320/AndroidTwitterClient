@@ -20,6 +20,11 @@ class ReplyFragment :BaseFragment<FragmentReplayBinding>() {
         super.onCreate(savedInstanceState)
         viewModel = ReplyFragmentViewModel(context).apply {
             restoreInstanceState(savedInstanceState)
+            replies.sync()
+                    .bindToLifecycle(this)
+                    .onNext { tweetListAdapter.add(0, it) }
+                    .subscribe()
+                    .run { disposables.add(this) }
         }
         tweetListAdapter = TweetListAdapter(context)
     }
@@ -41,12 +46,6 @@ class ReplyFragment :BaseFragment<FragmentReplayBinding>() {
                 }
             }
         }
-
-        viewModel.replies.sync()
-                .bindToLifecycle(this)
-                .onNext { tweetListAdapter.add(0, it) }
-                .subscribe()
-                .run { disposables?.add(this) }
 
         viewModel.fetchReply()
     }
