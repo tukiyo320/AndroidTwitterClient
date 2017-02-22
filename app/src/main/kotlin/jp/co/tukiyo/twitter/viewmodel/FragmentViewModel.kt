@@ -1,6 +1,8 @@
 package jp.co.tukiyo.twitter.viewmodel
 
 import android.content.Context
+import android.os.Bundle
+import com.evernote.android.state.StateSaver
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.LifecycleTransformer
 import com.trello.rxlifecycle2.RxLifecycle
@@ -21,5 +23,17 @@ open class FragmentViewModel(override val context: Context) : BaseViewModel(), L
 
     override fun <T : Any?> bindUntilEvent(event: FragmentEvent): LifecycleTransformer<T> {
         return RxLifecycle.bindUntilEvent(lifeCycleEvent, event)
+    }
+
+    fun saveInstanceState(savedInstanceState: Bundle?) {
+        savedInstanceState?.let {
+            StateSaver.saveInstanceState(this, it)
+        }
+    }
+
+    fun restoreInstanceState(savedInstanceState: Bundle?) {
+        savedInstanceState?.let {
+            StateSaver.restoreInstanceState(this, it)
+        }
     }
 }

@@ -3,6 +3,7 @@ package jp.co.tukiyo.twitter.viewmodel
 import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
+import com.evernote.android.state.State
 import com.twitter.sdk.android.Twitter
 import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.Result
@@ -10,20 +11,11 @@ import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.models.Tweet
 import io.reactivex.subjects.BehaviorSubject
 
-class ReplyFragmentViewModel(context: Context, savedInstanceState: Bundle?) : FragmentViewModel(context) {
+class ReplyFragmentViewModel(context: Context) : FragmentViewModel(context) {
     val replies : BehaviorSubject<Tweet> = BehaviorSubject.create()
-    var latestReplyId: Long?
 
-    init {
-        val id = savedInstanceState?.getLong("latest_reply_id")
-        latestReplyId = id?.let {
-            return@let if(it == 0L) {
-                null
-            } else {
-                it
-            }
-        }
-    }
+    @State
+    var latestReplyId: Long? = null
 
     fun fetchReply() {
         val sinceId = latestReplyId?.let { it + 1 }
@@ -42,11 +34,5 @@ class ReplyFragmentViewModel(context: Context, savedInstanceState: Bundle?) : Fr
                         }
                     }
                 })
-    }
-
-    fun destroy(outState: Bundle?) {
-        latestReplyId?.let {
-            outState?.putLong("latest_reply_id", it)
-        }
     }
 }

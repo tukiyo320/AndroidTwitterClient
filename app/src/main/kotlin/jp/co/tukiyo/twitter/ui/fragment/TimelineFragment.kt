@@ -21,7 +21,9 @@ class TimelineFragment : BaseFragment<FragmentTimelineBinding>(), OnRecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = TimelineFragmentViewModel(context, savedInstanceState)
+        viewModel = TimelineFragmentViewModel(context).apply {
+            restoreInstanceState(savedInstanceState)
+        }
         tweetListAdapter = TweetListAdapter(context)
     }
 
@@ -59,7 +61,7 @@ class TimelineFragment : BaseFragment<FragmentTimelineBinding>(), OnRecyclerView
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        viewModel.destroy(outState)
+        viewModel.saveInstanceState(outState)
         super.onSaveInstanceState(outState)
     }
 }
