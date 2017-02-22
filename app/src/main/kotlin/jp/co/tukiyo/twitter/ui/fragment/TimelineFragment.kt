@@ -7,6 +7,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.databinding.FragmentTimelineBinding
+import jp.co.tukiyo.twitter.extensions.onNext
 import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.ui.adapter.TweetListAdapter
 import jp.co.tukiyo.twitter.ui.listener.OnRecyclerViewListener
@@ -44,7 +45,7 @@ class TimelineFragment : BaseFragment<FragmentTimelineBinding>(), OnRecyclerView
 
         viewModel.tweets.sync()
                 .bindToLifecycle(this)
-                .doOnNext { tweetListAdapter.add(0, it) }
+                .onNext { tweetListAdapter.add(0, it) }
                 .subscribe()
                 .run {
                     disposables?.add(this)

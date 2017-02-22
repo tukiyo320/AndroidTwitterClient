@@ -6,6 +6,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.databinding.FragmentPostTweetBinding
+import jp.co.tukiyo.twitter.extensions.onCompleted
 import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.viewmodel.PostTweetFragmentViewModel
 
@@ -33,7 +34,7 @@ class PostTweetFragment : BaseFragment<FragmentPostTweetBinding>() {
 
         viewModel.subject.sync()
                 .bindToLifecycle(this)
-                .doOnComplete {
+                .onCompleted {
                     reset()
                     mainActivity.popScreen()
                 }
