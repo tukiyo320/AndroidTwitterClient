@@ -25,15 +25,4 @@ open class FragmentViewModel(override val context: Context) : BaseViewModel(), L
         return RxLifecycle.bindUntilEvent(lifeCycleEvent, event)
     }
 
-    fun saveInstanceState(savedInstanceState: Bundle?) {
-        savedInstanceState?.let {
-            StateSaver.saveInstanceState(this, it)
-        }
-    }
-
-    fun restoreInstanceState(savedInstanceState: Bundle?) {
-        savedInstanceState?.let {
-            StateSaver.restoreInstanceState(this, it)
-        }
-    }
 }

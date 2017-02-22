@@ -2,18 +2,24 @@ package jp.co.tukiyo.twitter.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import com.bumptech.glide.Glide
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.databinding.ActivityMainBinding
+import jp.co.tukiyo.twitter.extensions.glide.BitmapViewBackgroundTarget
+import jp.co.tukiyo.twitter.extensions.onNext
+import jp.co.tukiyo.twitter.extensions.sync
 import jp.co.tukiyo.twitter.ui.screen.Screen
 import jp.co.tukiyo.twitter.ui.screen.TabScreen
-import jp.co.tukiyo.twitter.ui.screen.TimelineScreen
+import jp.co.tukiyo.twitter.ui.screen.WebViewScreen
+import jp.co.tukiyo.twitter.viewmodel.MainActivityViewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override val layoutResourceId: Int = R.layout.activity_main
+    val viewModel: MainActivityViewModel = MainActivityViewModel(this)
 
     fun pushScreen(screen: Screen) {
         if (supportFragmentManager.findFragmentByTag(screen.identify) != null) return
@@ -38,6 +44,33 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding.run {
+            topLeftNavigationList?.run {
+                adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, listOf("profile", "config", "official"))
+                setOnItemClickListener { adapterView, view, i, l ->
+                    when(i) {
+                        2 -> pushScreen(WebViewScreen())
+                    }
+                }
+            }
+        }
+
+        viewModel.user.sync()
+                .onNext {
+                    binding.run {
+                        user = it
+                        Glide.with(this@MainActivity)
+                                .load(it.profileBackgroundImageUrl)
+                                .asBitmap()
+                                .centerCrop()
+                                .placeholder(android.R.drawable.ic_menu_call)
+                                .dontAnimate()
+                                .into(BitmapViewBackgroundTarget(topLeftNavigationHeader))
+                    }
+                }
+                .subscribe()
+                .run { disposables?.add(this) }
+
         val intent: Intent = Intent(this, LoginActivity::class.java)
         startActivityForResult(intent, 1001)
     }
@@ -46,6 +79,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode) {
             1001 -> {
+                viewModel.fetchUserInfo()
                 replaceScreen(TabScreen())
             }
         }
