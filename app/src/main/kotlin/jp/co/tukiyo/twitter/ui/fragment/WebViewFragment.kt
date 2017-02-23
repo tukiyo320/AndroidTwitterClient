@@ -15,18 +15,21 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding>() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.webView?.run {
-            setWebViewClient(WebViewClient())
-            loadUrl("https://google.com")
-            settings.javaScriptEnabled = true
-            setOnKeyListener { view, code, keyEvent ->
-                when(code) {
-                    KeyEvent.KEYCODE_BACK -> {
-                        if (canGoBack()) goBack()
+        binding?.run {
+            webView?.run {
+                setWebViewClient(WebViewClient())
+                loadUrl("https://google.com")
+                settings.javaScriptEnabled = true
+                setOnKeyListener { view, code, keyEvent ->
+                    when(code) {
+                        KeyEvent.KEYCODE_BACK -> {
+                            if (canGoBack()) goBack()
+                        }
                     }
+                    return@setOnKeyListener true
                 }
-                return@setOnKeyListener true
             }
+            mainActivity.setToolbar(toolbar)
         }
     }
 }

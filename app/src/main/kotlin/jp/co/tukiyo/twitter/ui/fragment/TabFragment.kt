@@ -31,6 +31,7 @@ class TabFragment : BaseFragment<FragmentTabBinding>() {
             tweetButton?.setOnClickListener {
                 mainActivity.pushScreen(PostTweetScreen())
             }
+            mainActivity.setToolbar(toolbar)
         }
     }
 }

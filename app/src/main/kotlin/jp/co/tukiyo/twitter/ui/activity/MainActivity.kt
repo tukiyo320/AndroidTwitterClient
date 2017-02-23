@@ -2,8 +2,11 @@ package jp.co.tukiyo.twitter.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ArrayAdapter
 import com.bumptech.glide.Glide
 import jp.co.tukiyo.twitter.R
@@ -73,6 +76,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         val intent: Intent = Intent(this, LoginActivity::class.java)
         startActivityForResult(intent, 1001)
+    }
+
+    fun setToolbar(toolbar: Toolbar?) {
+        val drawerToggle = ActionBarDrawerToggle(this, binding.topNavigation, toolbar, 0, 0).apply {
+            isDrawerIndicatorEnabled = true
+        }
+        binding.topNavigation.addDrawerListener(drawerToggle)
+    }
+
+    fun setToolbar(toolbar: Toolbar?, isHomeUpAsEnabled: Boolean) {
+        setToolbar(toolbar, isHomeUpAsEnabled, View.OnClickListener { popScreen() })
+    }
+
+    fun setToolbar(toolbar: Toolbar?, isHomeUpAsEnabled: Boolean, clickListener: View.OnClickListener) {
+        if (!isHomeUpAsEnabled) return Unit.run { setToolbar(toolbar) }
+
+        toolbar?.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
+        toolbar?.setNavigationOnClickListener(clickListener)
+    }
+
+    fun setDrawerLockMode(mode: Int) {
+        binding.topNavigation.setDrawerLockMode(mode)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

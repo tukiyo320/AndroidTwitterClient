@@ -1,6 +1,7 @@
 package jp.co.tukiyo.twitter.ui.fragment
 
 import android.os.Bundle
+import android.support.v4.widget.DrawerLayout
 import android.view.View
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
@@ -17,6 +18,8 @@ class PostTweetFragment : BaseFragment<FragmentPostTweetBinding>() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mainActivity.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
         val viewModel = PostTweetFragmentViewModel(context)
 
         binding?.run {
@@ -24,6 +27,7 @@ class PostTweetFragment : BaseFragment<FragmentPostTweetBinding>() {
                 setNavigationOnClickListener {
                     mainActivity.popScreen()
                 }
+                mainActivity.setToolbar(this, true)
             }
             tweetPostButton.run {
                 setOnClickListener {
@@ -40,6 +44,11 @@ class PostTweetFragment : BaseFragment<FragmentPostTweetBinding>() {
                 }
                 .subscribe()
                 .run { disposables?.add(this) }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mainActivity.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
     fun reset() {
