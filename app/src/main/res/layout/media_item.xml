@@ -9,14 +9,15 @@
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
-        <ImageView
+        <com.github.chuross.AspectRatioImageView
             android:id="@+id/media_item_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:imageUrl="@{media.mediaUrl}"/>
+            android:layout_height="wrap_content"
+            app:ariv_heightRatio="1"
+            app:ariv_widthRatio="1"/>
     </RelativeLayout>
 </layout>

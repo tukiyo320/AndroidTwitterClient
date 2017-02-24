@@ -65,6 +65,7 @@ dependencies {
     compile 'com.jpardogo.materialtabstrip:library:1.1.1'
     compile 'com.evernote:android-state:1.0.3'
     annotationProcessor 'com.evernote:android-state-processor:1.0.3'
+    compile 'com.github.chuross:aspect-ratio-imageview:1.0.2'
 }
 repositories {
     mavenCentral()
