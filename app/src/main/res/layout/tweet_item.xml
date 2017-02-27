@@ -12,6 +12,10 @@
                   android:id="@+id/tweet_item"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:layout_marginEnd="2dp"
+                  android:layout_marginStart="2dp"
+                  android:paddingTop="5dp"
+                  android:paddingBottom="5dp"
                   android:background="#CCCCFF"
                   android:divider="@color/tw__composer_blue_text"
                   android:dividerPadding="5dp"
@@ -24,27 +28,40 @@
             android:layout_height="50dp"
             app:imageUrl="@{tweet.user.profileImageUrl}"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:layout_marginStart="2dp">
 
             <TextView
                 android:id="@+id/tweet_item_display_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{tweet.user.name}"/>
+                android:text="@{tweet.user.name}"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tweet_item_screen_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tweet_item_display_name"
+                android:layout_marginStart="1dp"
+                android:layout_toEndOf="@+id/tweet_item_display_name"
+                android:text="@{'@' + tweet.user.screenName}"
+                android:textColor="@color/tw__composer_deep_gray"
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/tweet_item_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tweet_item_display_name"
                 android:layout_marginBottom="2dp"
-                android:layout_weight="1"
-                android:text="@{tweet.text}"
-                android:autoLink="web"/>
+                android:layout_marginTop="2dp"
+                android:autoLink="web"
+                android:text="@{tweet.text}"/>
 
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </layout>

@@ -1,6 +1,7 @@
 package jp.co.tukiyo.twitter.ui.fragment
 
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
@@ -41,6 +42,7 @@ class TimelineFragment : BaseFragment<FragmentTimelineBinding>(), OnRecyclerView
             tweetList.run {
                 layoutManager = LinearLayoutManager(activity)
                 adapter = tweetListAdapter
+                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             }
             swipeTweetList.run {
                 setOnRefreshListener {
