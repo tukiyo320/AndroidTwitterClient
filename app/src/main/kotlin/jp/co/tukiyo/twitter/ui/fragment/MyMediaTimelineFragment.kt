@@ -2,6 +2,7 @@ package jp.co.tukiyo.twitter.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import android.widget.AbsListView
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.Observable
@@ -22,10 +23,30 @@ class MyMediaTimelineFragment : BaseFragment<FragmentMyMediaTimelineBinding>() {
         super.onCreate(savedInstanceState)
         viewModel = MyMediaTimelineFragmentViewModel(context).apply {
             restoreInstanceState(savedInstanceState)
-            mediaTweets.sync()
+            val tweetStream = searchResults.sync()
                     .bindToLifecycle(this)
-                    .flatMap { Observable.fromIterable(it.extendedEtities.media) }
+                    .filter { it.isNotEmpty() }
+                    .share()
+
+            tweetStream
+                    .filter { results ->
+                        mediaAdapter.getTweetOfFirstItem()?.let { first ->
+                            results.last().id > first.id
+                        } ?: true
+                    }
+                    .flatMap { Observable.fromIterable(it.reversed()) }
                     .onNext { mediaAdapter.add(0, it) }
+                    .subscribe()
+                    .run { disposables.add(this) }
+
+            tweetStream
+                    .filter { results ->
+                        mediaAdapter.getTweetOfLastItem()?.let { last ->
+                            results.first().id < last.id
+                        } ?: false
+                    }
+                    .flatMap { Observable.fromIterable(it) }
+                    .onNext { mediaAdapter.add(it) }
                     .subscribe()
                     .run { disposables.add(this) }
         }
@@ -36,10 +57,43 @@ class MyMediaTimelineFragment : BaseFragment<FragmentMyMediaTimelineBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.run {
-            mediaGrid.adapter = mediaAdapter
-        }
+            mediaGrid.run {
+                adapter = mediaAdapter
+                setOnScrollListener(object : AbsListView.OnScrollListener {
+                    var isLoading: Boolean = false
+                    var previousTotal: Int = 0
+                    var visibleThreshold = 9
 
-        viewModel.fetchMyMediaTweets()
+                    override fun onScroll(view: AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
+                        if (isLoading) {
+                            if (totalItemCount > previousTotal) {
+                                isLoading = false
+                                previousTotal = totalItemCount
+                            }
+                        }
+                        if (!isLoading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                            viewModel.fetchMyMediaPast()
+                            isLoading = true
+                        }
+                    }
+
+                    override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {
+
+                    }
+
+                })
+            }
+            swipeTweetList.run {
+                setOnRefreshListener {
+                    if (isRefreshing) {
+                        isRefreshing = false
+                    } else {
+                        viewModel.fetchMyMediaRecent()
+                    }
+                }
+            }
+
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

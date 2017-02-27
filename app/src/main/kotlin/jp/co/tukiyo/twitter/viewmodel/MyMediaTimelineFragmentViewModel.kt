@@ -11,37 +11,51 @@ import com.twitter.sdk.android.core.models.Search
 import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.models.User
 import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
 
 class MyMediaTimelineFragmentViewModel(context: Context) : FragmentViewModel(context) {
-    val mediaTweets: BehaviorSubject<Tweet> = BehaviorSubject.create()
+    val searchResults: BehaviorSubject<List<Tweet>> = BehaviorSubject.create()
 
     @State
     var latestTweetId: Long? = null
 
-    fun fetchMyMediaTweets() {
+    @State
+    var oldestTweetId: Long? = null
+
+    fun fetchMyMediaRecent() {
+        fetchMyMediaTweets(searchResults, latestTweetId, null)
+    }
+
+    fun fetchMyMediaPast() {
+        fetchMyMediaTweets(searchResults, null, oldestTweetId?.let { it - 1 })
+    }
+
+    fun fetchMyMediaTweets(subject: Subject<List<Tweet>>, sinceId: Long?, maxId: Long?) {
         Twitter.getApiClient().accountService.verifyCredentials(true,false)
                 .enqueue(object : Callback<User>() {
                     override fun failure(exception: TwitterException?) {
                         Toast.makeText(context, "failed get user info", Toast.LENGTH_SHORT).show()
-                        mediaTweets.onError(exception)
+                        searchResults.onError(exception)
                     }
 
                     override fun success(result: Result<User>?) {
-                        result?.data?.let { fetchUserMediaTweets(it.screenName) }
+                        result?.data?.let { fetchUserMediaTweets(subject, it.screenName, sinceId, maxId) }
                     }
                 })
     }
 
-    fun fetchUserMediaTweets(screenName: String) {
-        val sinceId = latestTweetId?.let { it + 1 }
-        Twitter.getApiClient().searchService.tweets("filter:images from:$screenName exclude:retweets", null, null, null, null, null, null, sinceId, null, true)
+    fun fetchUserMediaTweets(subject: Subject<List<Tweet>>, screenName: String, sinceId: Long?, maxId: Long?) {
+        Twitter.getApiClient().searchService.tweets("filter:images from:$screenName exclude:retweets", null, null, null, null, 6, null, sinceId, maxId, true)
                 .enqueue(object : Callback<Search>() {
                     override fun success(result: Result<Search>?) {
                         result?.data?.run {
-                            tweets.reversed().forEach { mediaTweets.onNext(it) }
-                            tweets.firstOrNull()?.let {
-                                latestTweetId = it.id
-                            }
+                            subject.onNext(tweets)
+                            latestTweetId = tweets.firstOrNull { tweet ->
+                                latestTweetId?.let { it < tweet.id } ?: true
+                            }?.id ?: latestTweetId
+                            oldestTweetId = tweets.lastOrNull { tweet ->
+                                oldestTweetId?.let { it > tweet.id } ?: true
+                            }?.id ?: oldestTweetId
                         }
                     }
 
