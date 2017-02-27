@@ -62,7 +62,7 @@ class MyMediaTimelineFragment : BaseFragment<FragmentMyMediaTimelineBinding>() {
                 setOnScrollListener(object : AbsListView.OnScrollListener {
                     var isLoading: Boolean = false
                     var previousTotal: Int = 0
-                    var visibleThreshold = 9
+                    var visibleThreshold = 6
 
                     override fun onScroll(view: AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
                         if (isLoading) {
@@ -87,9 +87,8 @@ class MyMediaTimelineFragment : BaseFragment<FragmentMyMediaTimelineBinding>() {
                 setOnRefreshListener {
                     if (isRefreshing) {
                         isRefreshing = false
-                    } else {
-                        viewModel.fetchMyMediaRecent()
                     }
+                    viewModel.fetchMyMediaRecent()
                 }
             }
 

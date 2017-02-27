@@ -14,7 +14,7 @@
                 android:id="@+id/media_grid"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:numColumns="3"
+                android:numColumns="2"
                 android:stretchMode="columnWidth"/>
         </android.support.v4.widget.SwipeRefreshLayout>
     </RelativeLayout>
