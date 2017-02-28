@@ -42,9 +42,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.android.support:design:25.1.1'
-    compile 'com.android.support:support-v4:25.1.1'
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:design:25.2.0'
+    compile 'com.android.support:support-v4:25.2.0'
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     kapt 'com.github.gfx.android.orma:orma-processor:4.1.0'
@@ -56,7 +56,7 @@ dependencies {
     compile "com.hannesdorfmann.fragmentargs:annotation:3.0.2"
     kapt "com.android.databinding:compiler:2.2.0"
     kapt "com.hannesdorfmann.fragmentargs:processor:3.0.2"
-    compile "com.android.support:recyclerview-v7:25.1.1"
+    compile "com.android.support:recyclerview-v7:25.2.0"
     compile "io.reactivex.rxjava2:rxjava:2.0.1"
     compile "io.reactivex.rxjava2:rxandroid:2.0.1"
     compile "com.trello.rxlifecycle2:rxlifecycle:2.0.1"
