@@ -13,6 +13,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        def properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        resValue "string", "twitter_key", "\"${properties.getProperty("twitter_key")}\""
+        resValue "string", "twitter_secret", "\"${properties.getProperty("twitter_secret")}\""
     }
     buildTypes {
         release {
