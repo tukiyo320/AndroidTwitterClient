@@ -1,8 +1,6 @@
 package jp.co.tukiyo.twitter.viewmodel
 
 import android.content.Context
-import android.os.Bundle
-import com.evernote.android.state.StateSaver
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.LifecycleTransformer
 import com.trello.rxlifecycle2.RxLifecycle

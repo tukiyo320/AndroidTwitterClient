@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -26,7 +27,8 @@
             android:id="@+id/tweet_item_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:imageUrl="@{tweet.user.profileImageUrl}"/>
+            app:imageUrl="@{tweet.user.profileImageUrl}"
+            android:contentDescription="@string/userIcon"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

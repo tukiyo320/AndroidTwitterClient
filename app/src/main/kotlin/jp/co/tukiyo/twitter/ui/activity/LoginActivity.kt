@@ -5,12 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.twitter.sdk.android.Twitter
 import com.twitter.sdk.android.core.*
-import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import com.twitter.sdk.android.core.models.User
 import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.databinding.ActivityLoginBinding

@@ -1,7 +1,6 @@
 package jp.co.tukiyo.twitter.viewmodel
 
 import android.content.Context
-import android.os.Bundle
 import android.widget.Toast
 import com.evernote.android.state.State
 import com.twitter.sdk.android.Twitter

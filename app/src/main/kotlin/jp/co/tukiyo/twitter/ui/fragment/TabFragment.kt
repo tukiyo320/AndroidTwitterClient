@@ -8,18 +8,15 @@ import jp.co.tukiyo.twitter.R
 import jp.co.tukiyo.twitter.databinding.FragmentTabBinding
 import jp.co.tukiyo.twitter.ui.adapter.TabAdapter
 import jp.co.tukiyo.twitter.ui.screen.PostTweetScreen
-import jp.co.tukiyo.twitter.viewmodel.TabFragmentViewModel
 
 @FragmentWithArgs
 class TabFragment : BaseFragment<FragmentTabBinding>() {
     override val layoutResourceId: Int = R.layout.fragment_tab
     lateinit var adapter: FragmentPagerAdapter
-    lateinit var viewModel: TabFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = TabAdapter(childFragmentManager)
-        viewModel = TabFragmentViewModel(context)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
